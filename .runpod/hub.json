@@ -1,7 +1,7 @@
 
 {
-  "title": "Multi‑Model Image & Video Worker",
-  "description": "Serverless SD3 (text‑to‑image) and SVD (image‑to‑video) worker with pay‑per‑second billing.",
+  "title": "Multi-Model Image & Video Worker",
+  "description": "Hub-style serverless worker (SD3 image + SVD video) using the official RunPod pattern.",
   "type": "serverless",
   "category": "image",
   "config": {
@@ -9,10 +9,6 @@
     "containerDiskInGb": 30,
     "gpuCount": 1,
     "env": [
-      {
-        "key": "REPO_URL",
-        "value": "https://github.com/asciifarm/runpod-multimodel-serverless.git"
-      },
       {
         "key": "WORKER",
         "input": {
