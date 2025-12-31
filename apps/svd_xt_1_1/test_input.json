@@ -1,8 +1,0 @@
-{
-  "input": {
-    "image_base64": "BASE64_IMAGE_HERE",
-    "motion_bucket_id": 120,
-    "noise_aug_strength": 0.02,
-    "fps": 7
-  }
-}
