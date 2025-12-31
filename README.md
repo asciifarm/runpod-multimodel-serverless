@@ -1,7 +1,6 @@
 
 # Multi‑Model Image & Video Worker (RunPod Serverless)
-
-[![RunPod Hub](https://runpod.io/images/badges/runpod-hub.svg)](https://www.runpod.io/hub)
+[![Runpod](https://api.runpod.io/badge/asciifarm/runpod-multimodel-serverless)](https://console.runpod.io/hub/asciifarm/runpod-multimodel-serverless)
 
 Serverless **multi‑model** worker for RunPod Hub and private endpoints.
 
