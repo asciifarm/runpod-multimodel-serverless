@@ -1,28 +1,16 @@
 
-# Multi‑Model Image & Video Worker (RunPod Serverless)
-[![Runpod](https://api.runpod.io/badge/asciifarm/runpod-multimodel-serverless)](https://console.runpod.io/hub/asciifarm/runpod-multimodel-serverless)
+# Multi-Model Serverless Worker (RunPod Hub)
 
-Serverless **multi‑model** worker for RunPod Hub and private endpoints.
+[![RunPod Hub](https://runpod.io/images/badges/runpod-hub.svg)](https://www.runpod.io/hub)
 
-Supports:
-- **Stable Diffusion 3 Medium** – text‑to‑image
-- **Stable Video Diffusion XT 1.1** – image‑to‑video
+Monorepo serverless **Hub-style**, modellato sul progetto ufficiale `worker-sdxl-turbo`.
 
-## Features
-- Single Hub tool with **WORKER** selector
-- True serverless (scale‑to‑zero, pay‑per‑second)
-- Optimized cold‑start with HuggingFace cache on volume
-- Async jobs via `/run` + `/status`
+## Modelli supportati
+- **sd3_medium** – Stable Diffusion 3 Medium (text-to-image)
+- **svd_xt_1_1** – Stable Video Diffusion XT 1.1 (image-to-video)
 
-## Models
-| WORKER | Task |
-|------|------|
-| `sd3_medium` | Text → Image |
-| `svd_xt_1_1` | Image → Video |
-
-## Usage
-Select the model using the **WORKER** environment variable (Hub UI preset).
-
-## Notes
-- First run on a fresh volume downloads model weights.
-- Subsequent runs reuse cache for faster startup.
+## Come funziona
+- Dockerfile **GPU completo**, buildato UNA VOLTA dal RunPod Hub
+- Nessun `git clone` a runtime
+- Worker serverless avviato on-demand (pay-per-second)
+- Selezione modello via variabile `WORKER`

@@ -1,6 +1,5 @@
 
 import torch
-import runpod
 from diffusers import StableDiffusion3Pipeline
 from io import BytesIO
 import base64
@@ -32,4 +31,3 @@ def handler(event):
     p = load()
     img = p(prompt=prompt, num_inference_steps=data.get("steps", 28)).images[0]
     return {"image": image_to_base64(img)}
-
