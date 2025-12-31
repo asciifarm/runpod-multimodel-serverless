@@ -10,6 +10,10 @@
     "gpuCount": 1,
     "env": [
       {
+        "key": "REPO_URL",
+        "value": "https://github.com/asciifarm/runpod-multimodel-serverless.git"
+      },
+      {
         "key": "WORKER",
         "input": {
           "name": "Model",
