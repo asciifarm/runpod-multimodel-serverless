@@ -1,0 +1,16 @@
+{
+  "tests": [
+    {
+      "name": "sd3_basic",
+      "input": { "input": { "prompt": "A simple icon of a cat, white background", "steps": 10, "width": 512, "height": 512 } },
+      "timeout": 180000
+    }
+  ],
+  "config": {
+    "gpuCount": 1,
+    "env": [
+      { "key": "WORKER", "value": "sd3_medium" }
+    ],
+    "allowedCudaVersions": ["12.8","12.7","12.6","12.5","12.4","12.3","12.2","12.1","12.0","11.8","11.7"]
+  }
+}
