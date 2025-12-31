@@ -1,0 +1,41 @@
+{
+  "title": "Multi-Model Image Worker (SD3 + SVD)",
+  "description": "Serverless worker: SD3 text-to-image e SVD image-to-video con cache su volume.",
+  "type": "serverless",
+  "category": "image",
+  "config": {
+    "runsOn": "GPU",
+    "containerDiskInGb": 30,
+    "gpuCount": 1,
+    "allowedCudaVersions": ["12.8","12.7","12.6","12.5","12.4","12.3","12.2","12.1","12.0"],
+    "env": [
+      {
+        "key": "WORKER",
+        "input": {
+          "name": "Worker",
+          "type": "string",
+          "description": "Seleziona il worker da avviare",
+          "options": [
+            { "label": "SD3 Medium (text-to-image)", "value": "sd3_medium" },
+            { "label": "SVD XT 1.1 (image-to-video)", "value": "svd_xt_1_1" }
+          ],
+          "default": "sd3_medium"
+        }
+      },
+      { "key": "HF_HOME", "value": "/workspace/.cache/huggingface" },
+      { "key": "DIFFUSERS_CACHE", "value": "/workspace/.cache/huggingface/diffusers" },
+      { "key": "TRANSFORMERS_CACHE", "value": "/workspace/.cache/huggingface/transformers" },
+      { "key": "PIP_CACHE_DIR", "value": "/workspace/.cache/pip" }
+    ],
+    "presets": [
+      {
+        "name": "Fast start (SD3)",
+        "defaults": { "WORKER": "sd3_medium" }
+      },
+      {
+        "name": "Video (SVD)",
+        "defaults": { "WORKER": "svd_xt_1_1" }
+      }
+    ]
+  }
+}
