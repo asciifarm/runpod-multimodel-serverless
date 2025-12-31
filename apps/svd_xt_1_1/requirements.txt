@@ -1,4 +1,5 @@
-runpod==1.7.9
+
+runpod
 torch
 diffusers
 transformers
@@ -8,4 +9,3 @@ pillow
 huggingface_hub
 imageio
 imageio-ffmpeg
-numpy

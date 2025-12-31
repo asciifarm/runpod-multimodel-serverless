@@ -1,36 +1,29 @@
-# RunPod Serverless Multi-Model (Monorepo)
 
-Monorepo pronto per GitHub per worker RunPod **serverless** con focus su **cold-start minimo** e **NO image build** (runtime install + cache su volume).
+# Multi‑Model Image & Video Worker (RunPod Serverless)
 
-Contiene 2 worker separati:
-- `sd3_medium` (Stable Diffusion 3 Medium) - text-to-image
-- `svd_xt_1_1` (Stable Video Diffusion Img2Vid XT 1.1) - image-to-video
+[![RunPod Hub](https://runpod.io/images/badges/runpod-hub.svg)](https://www.runpod.io/hub)
 
-## Perché "NO build, solo runtime"
-Invece di buildare un container pesante (CUDA+PyTorch), usi un'immagine base RunPod già pronta (es. `runpod/pytorch:...`) e in `dockerArgs`:
-1) cloni la repo
-2) installi requirements del worker
-3) avvii `handler.py`
+Serverless **multi‑model** worker for RunPod Hub and private endpoints.
 
-Il download dei pesi viene cache-ato su `/workspace` (volume RunPod), quindi:
-- primo cold start: scarica i pesi
-- cold start successivi sullo stesso volume: riusa cache (molto più veloce)
+Supports:
+- **Stable Diffusion 3 Medium** – text‑to‑image
+- **Stable Video Diffusion XT 1.1** – image‑to‑video
 
-## Struttura
-- `apps/<worker>/handler.py` : entrypoint RunPod serverless
-- `apps/<worker>/download_weights.py` : warmup/cache pesi (idempotente)
-- `apps/<worker>/.runpod/` : template + metadata
-- `scripts/runtime_bootstrap.sh` : bootstrap unico (clone + deps + run)
+## Features
+- Single Hub tool with **WORKER** selector
+- True serverless (scale‑to‑zero, pay‑per‑second)
+- Optimized cold‑start with HuggingFace cache on volume
+- Async jobs via `/run` + `/status`
 
-## Endpoints RunPod
-RunPod serverless espone tipicamente:
-- `/run` (async) -> ritorna `id`
-- `/status/<id>` -> polling
-- `/runsync` (sync) -> attende risultato
+## Models
+| WORKER | Task |
+|------|------|
+| `sd3_medium` | Text → Image |
+| `svd_xt_1_1` | Image → Video |
 
-## Note cold start
-Per ridurre il tempo:
-- usa volume e cache HF su `/workspace/.cache/huggingface`
-- scarica pesi in bootstrap (prima del primo job)
-- evita di installare dipendenze non necessarie
-- pin versioni e preferisci wheels
+## Usage
+Select the model using the **WORKER** environment variable (Hub UI preset).
+
+## Notes
+- First run on a fresh volume downloads model weights.
+- Subsequent runs reuse cache for faster startup.

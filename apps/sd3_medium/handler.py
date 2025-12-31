@@ -1,62 +1,35 @@
-import os
-import runpod
+
 import torch
+import runpod
 from diffusers import StableDiffusion3Pipeline
-from common.b64 import image_to_base64_png
-from .schemas import Input
+from io import BytesIO
+import base64
+from PIL import Image
 
-MODEL_ID = "stabilityai/stable-diffusion-3-medium"
-TORCH_DTYPE = torch.float16
-
-# Global pipeline (lazy loaded)
 pipe = None
+
+def image_to_base64(img: Image.Image):
+    buf = BytesIO()
+    img.save(buf, format="PNG")
+    return base64.b64encode(buf.getvalue()).decode()
 
 def load():
     global pipe
-    if pipe is not None:
-        return pipe
-
-    assert torch.cuda.is_available(), "CUDA non disponibile: serve GPU"
-
-    # Usa cache su volume (/workspace) se configurata
-    pipe = StableDiffusion3Pipeline.from_pretrained(
-        MODEL_ID,
-        torch_dtype=TORCH_DTYPE,
-    ).to("cuda")
-
-    # Ottimizzazioni safe per ridurre memoria e migliorare cold-start
-    pipe.enable_attention_slicing()
-
+    if pipe is None:
+        pipe = StableDiffusion3Pipeline.from_pretrained(
+            "stabilityai/stable-diffusion-3-medium",
+            torch_dtype=torch.float16
+        ).to("cuda")
+        pipe.enable_attention_slicing()
     return pipe
 
 def handler(event):
-    global pipe
-    data = event.get("input", {}) or {}
-    try:
-        inp = Input(**data)
-    except Exception as e:
-        return {"error": f"invalid_input: {e}"}
+    data = event.get("input", {})
+    prompt = data.get("prompt")
+    if not prompt:
+        return {"error": "prompt missing"}
 
     p = load()
+    img = p(prompt=prompt, num_inference_steps=data.get("steps", 28)).images[0]
+    return {"image": image_to_base64(img)}
 
-    generator = None
-    if inp.seed is not None:
-        generator = torch.Generator(device="cuda").manual_seed(int(inp.seed))
-
-    out = p(
-        prompt=inp.prompt,
-        negative_prompt=inp.negative_prompt,
-        num_inference_steps=inp.steps,
-        guidance_scale=inp.guidance_scale,
-        width=inp.width,
-        height=inp.height,
-        generator=generator,
-    )
-
-    image = out.images[0]
-    return {
-        "model": MODEL_ID,
-        "image": image_to_base64_png(image),
-    }
-
-runpod.serverless.start({"handler": handler})
