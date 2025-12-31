@@ -1,7 +1,6 @@
 
 # Multi-Model Serverless Worker (RunPod Hub)
-
-[![RunPod Hub](https://runpod.io/images/badges/runpod-hub.svg)](https://www.runpod.io/hub)
+[![Runpod](https://api.runpod.io/badge/asciifarm/runpod-multimodel-serverless)](https://console.runpod.io/hub/asciifarm/runpod-multimodel-serverless)
 
 Monorepo serverless **Hub-style**, modellato sul progetto ufficiale `worker-sdxl-turbo`.
 
