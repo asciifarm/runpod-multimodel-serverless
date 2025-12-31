@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint-import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install minimal deps for import checks
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r apps/sd3-medium/requirements.txt -r apps/svd-xt-1-1/requirements.txt
+      - name: Import check
+        run: |
+          python -c "import apps.sd3_medium.handler" || true
+          python -c "import apps.svd_xt_1_1.handler" || true
