@@ -1,0 +1,9 @@
+{
+  "input": {
+    "prompt": "A clean studio product photo of a futuristic smartwatch, soft lighting",
+    "steps": 28,
+    "guidance_scale": 6.5,
+    "width": 1024,
+    "height": 1024
+  }
+}

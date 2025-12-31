@@ -1,0 +1,11 @@
+runpod==1.7.9
+torch
+diffusers
+transformers
+accelerate
+safetensors
+pillow
+huggingface_hub
+imageio
+imageio-ffmpeg
+numpy
