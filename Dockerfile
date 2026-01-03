@@ -1,4 +1,5 @@
-FROM runpod/pytorch:2.1.0-cuda12.1.0
+FROM runpod/pytorch:1.0.3-cu1290-torch290-ubuntu2204
+
 
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1
