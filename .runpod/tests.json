@@ -1,0 +1,11 @@
+{
+  "tests": [{
+    "name":"text_to_image",
+  "input": {
+    "task": "text_to_image",
+    "model": "sd15",
+    "prompt": "A futuristic city at night",
+    "steps": 30
+  }
+  }]
+}
